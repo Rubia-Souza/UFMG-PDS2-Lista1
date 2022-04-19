@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <cctype>
+#include <sstream>
 
 using namespace std;
 
@@ -11,10 +12,17 @@ void printMarker(const vector<string> marks, const string type);
 string toLower(const string reference);
 
 int main() {
-    string input = "";
-    getline(cin, input);
+    stringstream input;
+    input.clear();
 
-    vector<string> inputStrings = splitString(input, ' ');
+    string temp = "";
+    while(cin >> temp) {
+        input << temp << " ";
+    }
+
+    string line = input.str();
+
+    vector<string> inputStrings = splitString(line, ' ');
     vector<string> hashtags = getStringWithStart(inputStrings, '#');
     vector<string> ats = getStringWithStart(inputStrings, '@');
     
