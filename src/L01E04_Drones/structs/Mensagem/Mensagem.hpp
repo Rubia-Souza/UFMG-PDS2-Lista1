@@ -6,12 +6,16 @@
 #include "../Drone/Drone.hpp"
 
 typedef struct Mensagem {
+    std::string id;
     Drone remetente;
     Drone destinatario;
     std::string mensagem;
 
     Mensagem();
-    Mensagem(const Drone remetente, const Drone destinatario, const std::string mensagem);
+    Mensagem(const std::string id, const Drone remetente, const Drone destinatario, const std::string mensagem);
+
+    void setId(const std::string id);
+    std::string getId() const;
 
     void setRemetente(const Drone remetente);
     Drone getRemetente() const;

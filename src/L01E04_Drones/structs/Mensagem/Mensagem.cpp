@@ -9,10 +9,16 @@ Mensagem::Mensagem() {
     setMensagem("");
 }
 
-Mensagem::Mensagem(const Drone remetente, const Drone destinatario, const std::string mensagem) {
+Mensagem::Mensagem(const std::string id, const Drone remetente, const Drone destinatario, const std::string mensagem) {
+    setId(id);
     setDestinatario(destinatario);
     setRemetente(remetente);
     setMensagem(mensagem);
+}
+
+void Mensagem::setId(const std::string id) {
+    this->id = id;
+    return;
 }
 
 void Mensagem::setRemetente(const Drone remetente) {
@@ -28,6 +34,10 @@ void Mensagem::setDestinatario(const Drone destinatario) {
 void Mensagem::setMensagem(const std::string mensagem) {
     this->mensagem = mensagem;
     return;
+}
+
+std::string Mensagem::getId() const {
+    return this->id;
 }
 
 Drone Mensagem::getRemetente() const {

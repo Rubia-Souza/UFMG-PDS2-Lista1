@@ -3,6 +3,7 @@
 #include <string>
 #include <math.h>
 #include <sstream>
+#include <ctime>
 
 #include "Drone.hpp"
 #include "../Ponto2D/Ponto2D.hpp"
@@ -36,15 +37,34 @@ double Drone::calcularDistancia(const Drone& drone) const {
 
 void Drone::broadcastMensagem(const std::vector<Drone>& drones) {
     std::string conteudoMensagem = criarMensagem(*this);
+    std::string idMensagem = criarIdMensagem(*this);
 
     for(Drone drone : drones) {
         if(estaNoAlcance(drone)) {
-            Mensagem* mensagen = new Mensagem(*this, drone, conteudoMensagem);
+            Mensagem* mensagen = new Mensagem(idMensagem, *this, drone, conteudoMensagem);
             drone.salvarMensagem(*mensagen);
         }
     }
 
     return;
+}
+
+std::string criarIdMensagem(const Drone& drone) {
+    time_t dataHoraAtual = std::time(0);
+    std::tm* dataHoraLocal = localtime(&dataHoraAtual);
+
+    std::stringstream data;
+    data.clear();
+    data << dataHoraLocal->tm_year << "-" << dataHoraLocal->tm_mon << "-" << dataHoraLocal->tm_mday;
+
+    std::stringstream hora;
+    hora << dataHoraLocal->tm_hour << "-" << dataHoraLocal->tm_min << "-" << dataHoraLocal->tm_sec;
+
+    std::stringstream id;
+    id.clear();
+    id << drone.getId() << "_"  << data.str() << "_" << hora.str();
+    
+    return id.str();
 }
 
 std::string criarMensagem(const Drone& drone) {
