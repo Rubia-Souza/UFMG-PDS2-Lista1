@@ -153,8 +153,8 @@ int main(){
     cout << *intPointer << "\n";
 
     // 30) Imprima o VALOR guardado no ENDEREÇO do ponteiro (2) decrementado de 4
-    cout << "Valor do endereco intPointer (intArray[4]) menos 4: ";
-    cout << *intPointer - 4 << "\n";
+    cout << "Valor do endereco intPointer (intArray[4]) menos 4: "; // TODO: Remover
+    cout << *(intPointer - 4) << "\n";
 
     // 31) Declare um ponteiro para ponteiro e o inicialize com o ENDEREÇO da variável (2)
     int **pointerPointer = &intPointer;
@@ -172,7 +172,7 @@ int main(){
     cout << *pointerPointer << "\n";    
 
     // 35) Imprima o VALOR guardado no ENDEREÇO do ponteiro apontado por (31)
-    cout << "Valor contido no endereco que o ponteiro que o pointerPointer aponta: ";
+    cout << "Valor contido no endereco que o ponteiro que o pointerPointer aponta: "; // TODO: Remover
     cout << **pointerPointer << "\n";
     
     return 0;
