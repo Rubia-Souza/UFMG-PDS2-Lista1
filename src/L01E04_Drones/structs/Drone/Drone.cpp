@@ -30,10 +30,7 @@ void Drone::mover(const double velocidade, const double orientacaoVelocidade, co
 }
 
 double Drone::calcularDistancia(const Drone& drone) const {
-    double distanciaHorizontal = getPosicaoAtual().getX() - drone.getPosicaoAtual().getX();
-    double distanciaVertical = getPosicaoAtual().getY() - drone.getPosicaoAtual().getY();
-
-    return sqrt(pow(distanciaHorizontal, 2) + pow(distanciaVertical, 2));
+    return this->getPosicaoAtual().calcularDistancia(drone.getPosicaoAtual());
 }
 
 void Drone::broadcastMensagem(const std::vector<Drone>& drones) {
