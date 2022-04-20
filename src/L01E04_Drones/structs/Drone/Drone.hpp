@@ -40,6 +40,8 @@ typedef struct Drone {
 
     void setPosicaoAtual(const Ponto2D posicaoAtual);
     Ponto2D getPosicaoAtual() const;
+
+    std::vector<Mensagem> getMensagens() const;
 } Drone;
 
 #endif

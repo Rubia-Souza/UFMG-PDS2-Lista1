@@ -1,3 +1,4 @@
+#include <iostream>
 #include <vector>
 #include <string>
 #include <math.h>
@@ -35,12 +36,15 @@ double Drone::calcularDistancia(const Drone& drone) const {
 
 void Drone::broadcastMensagem(const std::vector<Drone>& drones) {
     std::string conteudoMensagem = criarMensagem(*this);
+
     for(Drone drone : drones) {
         if(estaNoAlcance(drone)) {
             Mensagem* mensagen = new Mensagem(*this, drone, conteudoMensagem);
             drone.salvarMensagem(*mensagen);
         }
     }
+
+    return;
 }
 
 std::string criarMensagem(const Drone& drone) {
@@ -67,7 +71,8 @@ void Drone::deletarMensagen(const Mensagem& mensagem) {
 }
 
 void Drone::limparMensagens() {
-
+    getMensagens().clear();
+    return;
 }
 
 void Drone::imprimirMensagemRescebidas() const {
@@ -75,7 +80,8 @@ void Drone::imprimirMensagemRescebidas() const {
 }
 
 void Drone::imprimirStatus() const {
-
+    std::cout << getId() << "\t" << getPosicaoAtual().getX() << "\t" << getPosicaoAtual().getY() << "\t" << getEnergia() << "\n";
+    return;
 }
 
 void Drone::setId(const int id) {
@@ -112,4 +118,8 @@ void Drone::setPosicaoAtual(const Ponto2D posicaoAtual) {
 
 Ponto2D Drone::getPosicaoAtual() const {
     return posicaoAtual;
+}
+
+std::vector<Mensagem> Drone::getMensagens() const {
+    return this->mensagens;
 }
