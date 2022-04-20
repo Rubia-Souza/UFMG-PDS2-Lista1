@@ -10,8 +10,8 @@ int main(){
     cout << "\n";  // TODO: Remove
     
     // 2) Declare um ponteiro para inteiros e inicialize com valor nulo
-    int* intPointer = NULL;
-    cout << "Valor inicial intPointer: " << intPointer << "\n"; // TODO: Remove
+    int* intPointer = nullptr;
+    cout << "Valor inicial intPointer: " << ((intPointer == NULL) ? "null" : "algo") << "\n"; // TODO: Remove
 
     // 3) Declare um vetor de inteiros com tamanho informado na entrada e preencha com os dados passados
     size_t size = 0;
@@ -40,7 +40,7 @@ int main(){
     
     // 7) Imprima o VALOR da variável declarada em (2)
     cout << "Valor da variavel intPointer: "; // TODO: Remove
-    //FIX: cout << *intPointer << "\n";
+    cout << intPointer << "\n";
 
     // 8) Imprima o ENDEREÇO da variável declarada em (3)
     cout << "Endereco da variavel intArray: "; // TODO: Remove
@@ -100,7 +100,7 @@ int main(){
 
     // 23) Multiplique todos os valores do vetor declarado em (3) por '10', porém manipulando apenas a variável (2)
     for(size_t i = 0; i < size; i++) {
-        intPointer[0] = intPointer[0] * 10;
+        intPointer[i] = intPointer[i] * 10;
     }
 
     // 24) Imprima os elementos de (3) a partir variável do vetor utilizando a notação [] (colchetes)
@@ -117,11 +117,29 @@ int main(){
 
     // 25) Imprima os elementos de (3) a partir variável do vetor utilizando a notação ponteiro/deslocamento
     // Ou seja, você NÃO deve efetivamente alterar o valor do ponteiro inicial de (3)
-    
+    cout << "Imprimindo elementos do intArray por meio do endereço: \n"; // TODO: Remover
+    for(int i = 0; i < size; i++) {
+        cout << *(intArray + i);
+        if(i != size - 1) {
+            cout << " ";
+        }
+        else{
+            cout << "\n";
+        }
+    }
 
     // 26) Imprima os elementos de (3) utilizando a variável (2) e a notação ponteiro/deslocamento
     // Ou seja, você NÃO deve efetivamente alterar o valor do ponteiro inicial de (3)
-    
+    cout << "Imprimindo elementos do intArray por meio do endereço com o ponteiro intPointer: \n"; // TODO: Remover
+    for(int i = 0; i < size; i++) {
+        cout << *(intPointer + i);
+        if(i != size - 1) {
+            cout << " ";
+        }
+        else{
+            cout << "\n";
+        }
+    }
 
     // 27) Atribua o ENDEREÇO da quinta posição de (3) à variável declarada em (2)
     intPointer = &intArray[4];
