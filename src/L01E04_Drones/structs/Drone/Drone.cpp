@@ -105,8 +105,14 @@ void Drone::limparMensagens() {
     return;
 }
 
-void Drone::imprimirMensagemRescebidas() const {
+void Drone::imprimirMensagemRecebidas() const {
+    std::cout << "Mensagens de " << this->getId() << "\n";
 
+    for(Mensagem mensagen : getMensagens()) {
+        std::cout << mensagen.getMensagem() << "\n";
+    }
+
+    return;
 }
 
 void Drone::imprimirStatus() const {

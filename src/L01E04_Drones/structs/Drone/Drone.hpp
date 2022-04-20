@@ -26,7 +26,7 @@ typedef struct Drone {
     void deletarMensagen(const Mensagem& mensagem);
     void limparMensagens();
 
-    void imprimirMensagemRescebidas() const;
+    void imprimirMensagemRecebidas() const;
     void imprimirStatus() const;
 
     void setId(const int id);
