@@ -1,3 +1,4 @@
+#include <list>
 #include <string>
 
 #include "Drone.hpp"
@@ -5,13 +6,14 @@
 
 Drone::Drone() {
     setId(-1);
-    setPosicaoAtual(*(new Ponto2D()));
+    setEnergia(0);
     setRaioCamunicacao(0.0);
+    setPosicaoAtual(*(new Ponto2D()));
 }
 
 Drone::Drone(const int id, const Ponto2D posicaoAtual, const double raioComunicacao) {
-    setEnergia(100);
     setId(id);
+    setEnergia(100);
     setPosicaoAtual(posicaoAtual);
     setRaioCamunicacao(raioComunicacao);
 }
@@ -28,7 +30,15 @@ void Drone::broadcastMensagem(const Drone& drones, const unsigned int tamanho) {
 
 }
 
-void Drone::salvarMensagem(const std::string mensagem){
+void Drone::salvarMensagem(const Mensagem mensagem) {
+
+}
+
+void Drone::deletarMensagen(const Mensagem& mensagem) {
+
+}
+
+void Drone::limparMensagens() {
 
 }
 
