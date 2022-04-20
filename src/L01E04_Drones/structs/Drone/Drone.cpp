@@ -1,33 +1,64 @@
-#include <list>
+#include <vector>
 #include <string>
+#include <math.h>
+#include <sstream>
 
 #include "Drone.hpp"
 #include "../Ponto2D/Ponto2D.hpp"
+
+#define QUANTIDADE_PADRAO_ENERGIA_INICIAL 100
+#define TAMANHO_MAXIMO_BUFFER_MENSAGENS 5
 
 Drone::Drone() {
     setId(-1);
     setEnergia(0);
     setRaioCamunicacao(0.0);
     setPosicaoAtual(*(new Ponto2D()));
+    this->mensagens = *(new std::vector<Mensagem>(TAMANHO_MAXIMO_BUFFER_MENSAGENS));
 }
 
 Drone::Drone(const int id, const Ponto2D posicaoAtual, const double raioComunicacao) {
     setId(id);
-    setEnergia(100);
+    setEnergia(QUANTIDADE_PADRAO_ENERGIA_INICIAL);
     setPosicaoAtual(posicaoAtual);
     setRaioCamunicacao(raioComunicacao);
+    this->mensagens = *(new std::vector<Mensagem>(TAMANHO_MAXIMO_BUFFER_MENSAGENS));
 }
 
 void Drone::mover(const double velocidade, const double orientacaoVelocidade, const double tempo) {
 
 }
 
-double Drone::calcularDistancia(const Drone& drone) {
+double Drone::calcularDistancia(const Drone& drone) const {
+    double distanciaHorizontal = getPosicaoAtual().getX() - drone.getPosicaoAtual().getX();
+    double distanciaVertical = getPosicaoAtual().getY() - drone.getPosicaoAtual().getY();
 
+    return sqrt(pow(distanciaHorizontal, 2) + pow(distanciaVertical, 2));
 }
 
-void Drone::broadcastMensagem(const Drone& drones, const unsigned int tamanho) {
+void Drone::broadcastMensagem(const std::vector<Drone>& drones) {
+    std::string conteudoMensagem = criarMensagem(*this);
+    for(Drone drone : drones) {
+        if(estaNoAlcance(drone)) {
+            Mensagem* mensagen = new Mensagem(*this, drone, conteudoMensagem);
+            drone.salvarMensagem(*mensagen);
+        }
+    }
+}
 
+std::string criarMensagem(const Drone& drone) {
+    std::stringstream mensagem;
+    mensagem.clear();
+
+    mensagem << "Drone: " << drone.getId() << ", Posição: [" 
+             << drone.getPosicaoAtual().getX() << "," << drone.getPosicaoAtual().getY() << "]";
+    
+    return mensagem.str();
+}
+
+bool Drone::estaNoAlcance(const Drone& drone) const {
+    double distancia = calcularDistancia(drone);
+    return distancia <= raioComunicacao;
 }
 
 void Drone::salvarMensagem(const Mensagem mensagem) {
