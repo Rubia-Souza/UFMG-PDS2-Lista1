@@ -87,7 +87,17 @@ void Drone::salvarMensagem(const Mensagem mensagem) {
 }
 
 void Drone::deletarMensagen(const Mensagem& mensagem) {
+    if(getMensagens().size() <= 0) {
+        return;
+    }
 
+    for(std::vector<Mensagem>::iterator mensagemSalva = getMensagens().begin(); mensagemSalva != getMensagens().end(); mensagemSalva++) {
+        if(mensagemSalva->id == mensagem.id) {
+            getMensagens().erase(mensagemSalva);
+        }
+    }
+
+    return;
 }
 
 void Drone::limparMensagens() {
