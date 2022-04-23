@@ -17,6 +17,7 @@ Drone::Drone() {
     setRaioCamunicacao(0.0);
     setPosicaoAtual(*(new Ponto2D()));
     this->mensagens = *(new std::vector<Mensagem>(TAMANHO_MAXIMO_BUFFER_MENSAGENS));
+    indexSalvarMensagem = 0;
 }
 
 Drone::Drone(const int id, const Ponto2D posicaoAtual, const double raioComunicacao) {
@@ -25,6 +26,7 @@ Drone::Drone(const int id, const Ponto2D posicaoAtual, const double raioComunica
     setPosicaoAtual(posicaoAtual);
     setRaioCamunicacao(raioComunicacao);
     this->mensagens = *(new std::vector<Mensagem>(TAMANHO_MAXIMO_BUFFER_MENSAGENS));
+    indexSalvarMensagem = 0;
 }
 
 void Drone::mover(const double velocidade, const double orientacaoVelocidade, const double tempo) {
@@ -83,7 +85,14 @@ bool Drone::estaNoAlcance(const Drone& drone) const {
 }
 
 void Drone::salvarMensagem(const Mensagem mensagem) {
+    if(indexSalvarMensagem >= TAMANHO_MAXIMO_BUFFER_MENSAGENS) {
+        indexSalvarMensagem = 0;
+    }
 
+    this->mensagens[indexSalvarMensagem] = mensagem;
+    indexSalvarMensagem++;
+
+    return;
 }
 
 void Drone::deletarMensagen(const Mensagem& mensagem) {
@@ -105,7 +114,7 @@ void Drone::limparMensagens() {
     return;
 }
 
-void Drone::imprimirMensagemRecebidas() const {
+void Drone::imprimirMensagensRecebidas() const {
     std::cout << "Mensagens de " << this->getId() << "\n";
 
     for(Mensagem mensagen : getMensagens()) {

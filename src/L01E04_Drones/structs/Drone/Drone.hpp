@@ -13,6 +13,7 @@ typedef struct Drone {
     double raioComunicacao;
     Ponto2D posicaoAtual;
     std::vector<Mensagem> mensagens;
+    unsigned int indexSalvarMensagem;
 
     Drone();
     Drone(const int id, const Ponto2D posicaoAtual, const double raioComunicacao);
@@ -26,7 +27,7 @@ typedef struct Drone {
     void deletarMensagen(const Mensagem& mensagem);
     void limparMensagens();
 
-    void imprimirMensagemRecebidas() const;
+    void imprimirMensagensRecebidas() const;
     void imprimirStatus() const;
 
     void setId(const int id);
