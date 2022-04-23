@@ -6,43 +6,43 @@
 #include "Ponto2D.hpp"
 
 Ponto2D::Ponto2D() {
-    setX(0.0);
-    setY(0.0);
+    set_x(0.0);
+    set_y(0.0);
 }
 
 Ponto2D::Ponto2D(const double x, const double y) {
-    setX(x);
-    setY(y);
+    set_x(x);
+    set_y(y);
 }
 
-double Ponto2D::calcularDistancia(const Ponto2D& ponto) const {
-    double distanciaHorizontal = getX() - ponto.getX();
-    double distanciaVertical = getY() - ponto.getY();
+double Ponto2D::calcular_distancia(const Ponto2D& ponto) const {
+    double distancia_horizontal = get_x() - ponto.get_x();
+    double distancia_vertical = get_y() - ponto.get_y();
 
-    return sqrt(pow(distanciaHorizontal, 2) + pow(distanciaVertical, 2));
+    return sqrt(pow(distancia_horizontal, 2) + pow(distancia_vertical, 2));
 }
 
-std::string Ponto2D::getDados() const {
+std::string Ponto2D::get_dados() const {
     std::stringstream stream;
-    stream << std::fixed << std::setprecision(2) << "[" << getX() << "," << getY() << "]";
+    stream << std::fixed << std::setprecision(2) << "[" << get_x() << "," << get_y() << "]";
     
     return stream.str();
 }
 
-void Ponto2D::setX(const double x) {
+void Ponto2D::set_x(const double x) {
     this->x = x;
     return;
 }
 
-double Ponto2D::getX() const {
+double Ponto2D::get_x() const {
     return this->x;
 }
 
-void Ponto2D::setY(const double y) {
+void Ponto2D::set_y(const double y) {
     this->y = y;
     return;
 }
 
-double Ponto2D::getY() const {
+double Ponto2D::get_y() const {
     return this->y;
 }

@@ -10,14 +10,14 @@ typedef struct Ponto2D {
     Ponto2D();
     Ponto2D(const double x, const double y);
 
-    void setX(const double x);
-    double getX() const;
+    double calcular_distancia(const Ponto2D& ponto) const;
+    std::string get_dados() const;
 
-    void setY(const double y);
-    double getY() const;
+    void set_x(const double x);
+    double get_x() const;
 
-    double calcularDistancia(const Ponto2D& ponto) const;
-    std::string getDados() const;
+    void set_y(const double y);
+    double get_y() const;
 } Ponto2D;
 
 #endif
