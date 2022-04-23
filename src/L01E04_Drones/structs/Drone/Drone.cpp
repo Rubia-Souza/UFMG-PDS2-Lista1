@@ -1,9 +1,7 @@
 #include <iostream>
-#include <vector>
 #include <string>
 #include <math.h>
 #include <sstream>
-#include <ctime>
 
 #include "Drone.hpp"
 #include "../Ponto2D/Ponto2D.hpp"
@@ -16,7 +14,8 @@ Drone::Drone() {
     setEnergia(0);
     setRaioCamunicacao(0.0);
     setPosicaoAtual(*(new Ponto2D()));
-    this->mensagens = *(new std::vector<Mensagem>(TAMANHO_MAXIMO_BUFFER_MENSAGENS));
+    this->mensagens = new std::string[TAMANHO_MAXIMO_BUFFER_MENSAGENS];
+    this->limparMensagens();
     indexSalvarMensagem = 0;
 }
 
@@ -25,7 +24,8 @@ Drone::Drone(const int id, const Ponto2D posicaoAtual, const double raioComunica
     setEnergia(QUANTIDADE_PADRAO_ENERGIA_INICIAL);
     setPosicaoAtual(posicaoAtual);
     setRaioCamunicacao(raioComunicacao);
-    this->mensagens = *(new std::vector<Mensagem>(TAMANHO_MAXIMO_BUFFER_MENSAGENS));
+    this->mensagens = new std::string[TAMANHO_MAXIMO_BUFFER_MENSAGENS];
+    this->limparMensagens();
     indexSalvarMensagem = 0;
 }
 
@@ -37,36 +37,16 @@ double Drone::calcularDistancia(const Drone& drone) const {
     return this->getPosicaoAtual().calcularDistancia(drone.getPosicaoAtual());
 }
 
-void Drone::broadcastMensagem(const std::vector<Drone>& drones) {
-    std::string conteudoMensagem = criarMensagem(*this);
-    std::string idMensagem = criarIdMensagem(*this);
+void Drone::broadcastMensagem(Drone** drones, const unsigned int qtdDrones) {
+    std::string mensagem = criarMensagem(*this);
 
-    for(Drone drone : drones) {
-        if(estaNoAlcance(drone)) {
-            Mensagem* mensagen = new Mensagem(idMensagem, *this, drone, conteudoMensagem);
-            drone.salvarMensagem(*mensagen);
+    for(unsigned int i = 0; i < qtdDrones; i++) {
+        if(estaNoAlcance(*drones[i])) {
+            drones[i]->salvarMensagem(mensagem);
         }
     }
 
     return;
-}
-
-std::string criarIdMensagem(const Drone& drone) {
-    time_t dataHoraAtual = std::time(0);
-    std::tm* dataHoraLocal = localtime(&dataHoraAtual);
-
-    std::stringstream data;
-    data.clear();
-    data << dataHoraLocal->tm_year << "-" << dataHoraLocal->tm_mon << "-" << dataHoraLocal->tm_mday;
-
-    std::stringstream hora;
-    hora << dataHoraLocal->tm_hour << "-" << dataHoraLocal->tm_min << "-" << dataHoraLocal->tm_sec;
-
-    std::stringstream id;
-    id.clear();
-    id << drone.getId() << "_"  << data.str() << "_" << hora.str();
-    
-    return id.str();
 }
 
 std::string criarMensagem(const Drone& drone) {
@@ -84,7 +64,7 @@ bool Drone::estaNoAlcance(const Drone& drone) const {
     return distancia <= raioComunicacao;
 }
 
-void Drone::salvarMensagem(const Mensagem mensagem) {
+void Drone::salvarMensagem(const std::string mensagem) {
     if(indexSalvarMensagem >= TAMANHO_MAXIMO_BUFFER_MENSAGENS) {
         indexSalvarMensagem = 0;
     }
@@ -95,14 +75,10 @@ void Drone::salvarMensagem(const Mensagem mensagem) {
     return;
 }
 
-void Drone::deletarMensagen(const Mensagem& mensagem) {
-    if(getMensagens().size() <= 0) {
-        return;
-    }
-
-    for(std::vector<Mensagem>::iterator mensagemSalva = getMensagens().begin(); mensagemSalva != getMensagens().end(); mensagemSalva++) {
-        if(mensagemSalva->id == mensagem.id) {
-            getMensagens().erase(mensagemSalva);
+void Drone::deletarMensagen(const std::string& mensagem) {
+    for(unsigned int i = 0; i < TAMANHO_MAXIMO_BUFFER_MENSAGENS; i++) {
+        if(mensagens[i] == mensagem) {
+            mensagens[i] = "";
         }
     }
 
@@ -110,15 +86,20 @@ void Drone::deletarMensagen(const Mensagem& mensagem) {
 }
 
 void Drone::limparMensagens() {
-    getMensagens().clear();
+    for(unsigned int i = 0; i < TAMANHO_MAXIMO_BUFFER_MENSAGENS; i++) {
+        mensagens[i] = "";
+    }
+
     return;
 }
 
 void Drone::imprimirMensagensRecebidas() const {
     std::cout << "Mensagens de " << this->getId() << "\n";
 
-    for(Mensagem mensagen : getMensagens()) {
-        std::cout << mensagen.getMensagem() << "\n";
+    for(unsigned int i = 0; i < TAMANHO_MAXIMO_BUFFER_MENSAGENS; i++) {
+        if(getMensagens()[i] != "") {
+            std::cout << mensagens[i] << "\n";
+        }
     }
 
     return;
@@ -165,6 +146,6 @@ Ponto2D Drone::getPosicaoAtual() const {
     return posicaoAtual;
 }
 
-std::vector<Mensagem> Drone::getMensagens() const {
+std::string* Drone::getMensagens() const {
     return this->mensagens;
 }

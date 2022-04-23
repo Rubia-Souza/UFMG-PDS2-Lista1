@@ -1,7 +1,6 @@
 #ifndef Drone_H
 #define Drone_H
 
-#include <vector>
 #include <string>
 
 #include "../Mensagem/Mensagem.hpp"
@@ -12,7 +11,7 @@ typedef struct Drone {
     double energia;
     double raioComunicacao;
     Ponto2D posicaoAtual;
-    std::vector<Mensagem> mensagens;
+    std::string* mensagens;
     unsigned int indexSalvarMensagem;
 
     Drone();
@@ -22,9 +21,9 @@ typedef struct Drone {
     double calcularDistancia(const Drone& drone) const;
     bool estaNoAlcance(const Drone& drone) const;
 
-    void broadcastMensagem(const std::vector<Drone>& drones);
-    void salvarMensagem(const Mensagem mensagem);
-    void deletarMensagen(const Mensagem& mensagem);
+    void broadcastMensagem(Drone** drones, const unsigned int qtdDrones);
+    void salvarMensagem(const std::string mensagem);
+    void deletarMensagen(const std::string& mensagem);
     void limparMensagens();
 
     void imprimirMensagensRecebidas() const;
@@ -42,7 +41,7 @@ typedef struct Drone {
     void setPosicaoAtual(const Ponto2D posicaoAtual);
     Ponto2D getPosicaoAtual() const;
 
-    std::vector<Mensagem> getMensagens() const;
+    std::string* getMensagens() const;
 } Drone;
 
 #endif
