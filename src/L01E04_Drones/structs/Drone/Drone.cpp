@@ -32,7 +32,24 @@ Drone::Drone(const int id, const Ponto2D posicao_atual, const double raio_comuni
 }
 
 void Drone::mover(const double velocidade, const double orientacao_velocidade, const double tempo) {
+    if(get_energia() <= 0) {
+        return;
+    }
 
+    const int x_final = velocidade * cos(orientacao_velocidade) + get_posicao_atual().get_x();
+    get_posicao_atual().set_x(x_final);
+    
+    const int y_final = velocidade * sin(orientacao_velocidade) + get_posicao_atual().get_y();
+    get_posicao_atual().set_y(y_final);
+
+    const unsigned int distanciaPercorrida = velocidade * tempo;
+    set_energia(get_energia() - distanciaPercorrida);
+
+    if(get_energia() <= 50) {
+        std::cout << "Alerta, energia baixa!" << "\n";
+    }
+
+    return;
 }
 
 double Drone::calcular_distancia(const Drone& drone) const {
