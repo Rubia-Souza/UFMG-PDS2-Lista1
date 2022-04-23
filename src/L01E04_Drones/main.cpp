@@ -1,23 +1,22 @@
 #include <iostream>
 #include <iomanip>
 
-#include "./structs/Drone/Drone.hpp"
-#include "./structs/Ponto2D/Ponto2D.hpp"
+#include "./Drone/Drone.hpp"
+#include "./Ponto2D/Ponto2D.hpp"
 
 using namespace std;
 
 int main() {
-  
     // Lendo quantidade de drones
     int num_drones;
     cin >> num_drones;
 
     // Criando o vetor de ponteiros
-    Drone* drones = new Drone[num_drones]; 
+    Drone* drones = new Drone[num_drones];
 
     // Preenchendo os drones com os dados de entrada
     double x, y, raio;
-    for (int i = 0; i < num_drones; i++) {
+    for(int i = 0; i < num_drones; i++) {
         cin >> x >> y >> raio;
         drones[i] = *(new Drone(i, Ponto2D(x, y), raio));
     }
@@ -30,21 +29,22 @@ int main() {
     while(cin >> data) {   // Lendo o caractere que define o comando
 
         // Executando o comando informado
-        switch (data) {
+        switch(data) {
             
             // Imprimindo status de todas os drones
             case 's':                 
-                for (int i = 0; i < num_drones; i++)
-                    drones[i].imprimirStatus();
-
+                for(int i = 0; i < num_drones; i++) {
+                    drones[i].imprimir_status();
+                }
             break;
 
             // Imprimindo a distancia entre todos os drones
             case 'd': 
-                for (int i = 0; i < num_drones; i++)
-                    for (int j = 0; j < num_drones; j++)
-                        cout << drones[i].calcularDistancia(drones[j]) << endl;
-                
+                for(int i = 0; i < num_drones; i++) {
+                    for(int j = 0; j < num_drones; j++) {
+                        cout << drones[i].calcular_distancia(drones[j]) << endl;    
+                    }
+                }
             break;
 
             // Mover drone
@@ -55,21 +55,18 @@ int main() {
                 cin >> v >> th >> t;
 
                 drones[idx].mover(v, th, t);
-                
-            break;     
+            break;
 
             // Broadcast mensagem
             case 'b':                  
                 cin >> idx; // Indice da nave que vai enviar mensagem
-                drones[idx].broadcastMensagem(drones, num_drones);
-                
-            break;     
+                drones[idx].broadcast_mensagem(&drones, num_drones);
+            break;
 
             // Imprimir buffer de mensagens
             case 'p':                  
                 cin >> idx; // Indice da nave para recuperar mensagens
-                drones[idx].imprimirMensagensRecebidas();
-                
+                drones[idx].imprimir_mensagens_recebidas();
             break;
         }
     }
