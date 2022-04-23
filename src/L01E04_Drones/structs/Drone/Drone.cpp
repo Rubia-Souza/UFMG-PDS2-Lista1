@@ -9,73 +9,75 @@
 #define QUANTIDADE_PADRAO_ENERGIA_INICIAL 100
 #define TAMANHO_MAXIMO_BUFFER_MENSAGENS 5
 
+std::string criar_mensagem(const Drone& drone);
+
 Drone::Drone() {
-    setId(-1);
-    setEnergia(0);
-    setRaioCamunicacao(0.0);
-    setPosicaoAtual(*(new Ponto2D()));
+    set_id(-1);
+    set_energia(0);
+    set_raio_comunicacao(0.0);
+    set_posicao_atual(*(new Ponto2D()));
     this->mensagens = new std::string[TAMANHO_MAXIMO_BUFFER_MENSAGENS];
-    this->limparMensagens();
-    indexSalvarMensagem = 0;
+    this->limpar_mensagens();
+    index_salvar_mensagem = 0;
 }
 
-Drone::Drone(const int id, const Ponto2D posicaoAtual, const double raioComunicacao) {
-    setId(id);
-    setEnergia(QUANTIDADE_PADRAO_ENERGIA_INICIAL);
-    setPosicaoAtual(posicaoAtual);
-    setRaioCamunicacao(raioComunicacao);
+Drone::Drone(const int id, const Ponto2D posicao_atual, const double raio_comunicacao) {
+    set_id(id);
+    set_energia(QUANTIDADE_PADRAO_ENERGIA_INICIAL);
+    set_posicao_atual(posicao_atual);
+    set_raio_comunicacao(raio_comunicacao);
     this->mensagens = new std::string[TAMANHO_MAXIMO_BUFFER_MENSAGENS];
-    this->limparMensagens();
-    indexSalvarMensagem = 0;
+    this->limpar_mensagens();
+    index_salvar_mensagem = 0;
 }
 
-void Drone::mover(const double velocidade, const double orientacaoVelocidade, const double tempo) {
+void Drone::mover(const double velocidade, const double orientacao_velocidade, const double tempo) {
 
 }
 
-double Drone::calcularDistancia(const Drone& drone) const {
-    return this->getPosicaoAtual().calcularDistancia(drone.getPosicaoAtual());
+double Drone::calcular_distancia(const Drone& drone) const {
+    return this->get_posicao_atual().calcular_distancia(drone.get_posicao_atual());
 }
 
-void Drone::broadcastMensagem(Drone** drones, const unsigned int qtdDrones) {
-    std::string mensagem = criarMensagem(*this);
+void Drone::broadcast_mensagem(Drone** drones, const unsigned int qtd_drones) {
+    std::string mensagem = criar_mensagem(*this);
 
-    for(unsigned int i = 0; i < qtdDrones; i++) {
-        if(estaNoAlcance(*drones[i])) {
-            drones[i]->salvarMensagem(mensagem);
+    for(unsigned int i = 0; i < qtd_drones; i++) {
+        if(esta_no_alcance(*drones[i])) {
+            drones[i]->salvar_mensagem(mensagem);
         }
     }
 
     return;
 }
 
-std::string criarMensagem(const Drone& drone) {
+std::string criar_mensagem(const Drone& drone) {
     std::stringstream mensagem;
     mensagem.clear();
 
-    mensagem << "Drone: " << drone.getId() << ", Posição: [" 
-             << drone.getPosicaoAtual().getX() << "," << drone.getPosicaoAtual().getY() << "]";
+    mensagem << "Drone: " << drone.get_id() 
+             << ", Posição: " << drone.get_posicao_atual().get_dados();
     
     return mensagem.str();
 }
 
-bool Drone::estaNoAlcance(const Drone& drone) const {
-    double distancia = calcularDistancia(drone);
-    return distancia <= raioComunicacao;
+bool Drone::esta_no_alcance(const Drone& drone) const {
+    double distancia = calcular_distancia(drone);
+    return distancia <= raio_comunicacao;
 }
 
-void Drone::salvarMensagem(const std::string mensagem) {
-    if(indexSalvarMensagem >= TAMANHO_MAXIMO_BUFFER_MENSAGENS) {
-        indexSalvarMensagem = 0;
+void Drone::salvar_mensagem(const std::string mensagem) {
+    if(index_salvar_mensagem >= TAMANHO_MAXIMO_BUFFER_MENSAGENS) {
+        index_salvar_mensagem = 0;
     }
 
-    this->mensagens[indexSalvarMensagem] = mensagem;
-    indexSalvarMensagem++;
+    this->mensagens[index_salvar_mensagem] = mensagem;
+    index_salvar_mensagem++;
 
     return;
 }
 
-void Drone::deletarMensagen(const std::string& mensagem) {
+void Drone::deletar_mensagen(const std::string& mensagem) {
     for(unsigned int i = 0; i < TAMANHO_MAXIMO_BUFFER_MENSAGENS; i++) {
         if(mensagens[i] == mensagem) {
             mensagens[i] = "";
@@ -85,7 +87,7 @@ void Drone::deletarMensagen(const std::string& mensagem) {
     return;
 }
 
-void Drone::limparMensagens() {
+void Drone::limpar_mensagens() {
     for(unsigned int i = 0; i < TAMANHO_MAXIMO_BUFFER_MENSAGENS; i++) {
         mensagens[i] = "";
     }
@@ -93,11 +95,11 @@ void Drone::limparMensagens() {
     return;
 }
 
-void Drone::imprimirMensagensRecebidas() const {
-    std::cout << "Mensagens de " << this->getId() << "\n";
+void Drone::imprimir_mensagens_recebidas() const {
+    std::cout << "Mensagens de " << this->get_id() << "\n";
 
     for(unsigned int i = 0; i < TAMANHO_MAXIMO_BUFFER_MENSAGENS; i++) {
-        if(getMensagens()[i] != "") {
+        if(get_mensagens()[i] != "") {
             std::cout << mensagens[i] << "\n";
         }
     }
@@ -105,47 +107,48 @@ void Drone::imprimirMensagensRecebidas() const {
     return;
 }
 
-void Drone::imprimirStatus() const {
-    std::cout << getId() << "\t" << getPosicaoAtual().getX() << "\t" << getPosicaoAtual().getY() << "\t" << getEnergia() << "\n";
+void Drone::imprimir_status() const {
+    std::cout << get_id() << "\t" << get_posicao_atual().get_x() 
+              << "\t" << get_posicao_atual().get_y() << "\t" << get_energia() << "\n";
     return;
 }
 
-void Drone::setId(const int id) {
+void Drone::set_id(const int id) {
     this->id = id;
     return;
 }
 
-int Drone::getId() const {
+int Drone::get_id() const {
     return id;
 }
 
-void Drone::setEnergia(const double energia) {
+void Drone::set_energia(const double energia) {
     this->energia = energia;
     return;
 }
 
-double Drone::getEnergia() const {
+double Drone::get_energia() const {
     return energia;
 }
 
-void Drone::setRaioCamunicacao(const double raioComunicacao) {
-    this->raioComunicacao = raioComunicacao;
+void Drone::set_raio_comunicacao(const double raio_comunicacao) {
+    this->raio_comunicacao = raio_comunicacao;
     return;
 }
 
-double Drone::getRaioComunicacao() const {
-    return raioComunicacao;
+double Drone::get_raio_comunicacao() const {
+    return raio_comunicacao;
 }
 
-void Drone::setPosicaoAtual(const Ponto2D posicaoAtual) {
-    this->posicaoAtual = posicaoAtual;
+void Drone::set_posicao_atual(const Ponto2D posicao_atual) {
+    this->posicao_atual = posicao_atual;
     return;
 }
 
-Ponto2D Drone::getPosicaoAtual() const {
-    return posicaoAtual;
+Ponto2D Drone::get_posicao_atual() const {
+    return posicao_atual;
 }
 
-std::string* Drone::getMensagens() const {
+std::string* Drone::get_mensagens() const {
     return this->mensagens;
 }
