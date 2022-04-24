@@ -24,7 +24,7 @@ double Ponto2D::calcular_distancia(const Ponto2D& ponto) const {
 
 std::string Ponto2D::get_dados() const {
     std::stringstream stream;
-    stream << std::fixed << std::setprecision(2) << "[" << get_x() << "," << get_y() << "]";
+    stream << std::fixed << std::setprecision(2) << "[" << get_x() << ", " << get_y() << "]";
     
     return stream.str();
 }
