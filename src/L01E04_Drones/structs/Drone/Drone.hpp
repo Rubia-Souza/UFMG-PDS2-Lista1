@@ -1,12 +1,11 @@
-#ifndef Drone_H
-#define Drone_H
+#ifndef DRONE_H
+#define DRONE_H
 
 #include <string>
 
-#include "../Mensagem/Mensagem.hpp"
 #include "../Ponto2D/Ponto2D.hpp"
 
-typedef struct Drone {
+struct Drone {
     int id;
     double energia;
     double raio_comunicacao;
@@ -42,6 +41,6 @@ typedef struct Drone {
     Ponto2D get_posicao_atual() const;
 
     std::string* get_mensagens() const;
-} Drone;
+};
 
 #endif

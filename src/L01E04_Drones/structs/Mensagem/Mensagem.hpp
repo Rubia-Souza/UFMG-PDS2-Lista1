@@ -5,7 +5,7 @@
 
 #include "../Drone/Drone.hpp"
 
-typedef struct Mensagem {
+struct Mensagem {
     std::string id;
     Drone remetente;
     Drone destinatario;
@@ -25,6 +25,6 @@ typedef struct Mensagem {
 
     void setMensagem(const std::string mensagem);
     std::string getMensagem() const;
-} Mensagem;
+};
 
 #endif

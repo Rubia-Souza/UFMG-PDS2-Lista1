@@ -1,9 +1,9 @@
-#ifndef Ponto2D_H
-#define Ponto2D_H
+#ifndef PONTO2D_H
+#define PONTO2D_H
 
 #include <string>
 
-typedef struct Ponto2D {
+struct Ponto2D {
     double x;
     double y;
 
@@ -18,6 +18,6 @@ typedef struct Ponto2D {
 
     void set_y(const double y);
     double get_y() const;
-} Ponto2D;
+};
 
 #endif
