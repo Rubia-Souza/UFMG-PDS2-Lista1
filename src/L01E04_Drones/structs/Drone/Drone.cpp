@@ -36,14 +36,14 @@ void Drone::mover(const double velocidade, const double orientacao_velocidade, c
         return;
     }
 
-    const int x_final = velocidade * cos(orientacao_velocidade) + get_posicao_atual().get_x();
-    get_posicao_atual().set_x(x_final);
-    
-    const int y_final = velocidade * sin(orientacao_velocidade) + get_posicao_atual().get_y();
-    get_posicao_atual().set_y(y_final);
-
-    const unsigned int distanciaPercorrida = velocidade * tempo;
+    const double distanciaPercorrida = velocidade * tempo;
     set_energia(get_energia() - distanciaPercorrida);
+
+    const double x_final = distanciaPercorrida * cos(orientacao_velocidade) + get_posicao_atual().get_x();
+    this->posicao_atual.set_x(x_final);
+    
+    const double y_final = distanciaPercorrida * sin(orientacao_velocidade) + get_posicao_atual().get_y();
+    this->posicao_atual.set_y(y_final);
 
     if(get_energia() <= 50) {
         std::cout << "Alerta, energia baixa!" << "\n";
