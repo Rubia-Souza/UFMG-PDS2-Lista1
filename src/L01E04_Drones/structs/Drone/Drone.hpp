@@ -17,8 +17,8 @@ struct Drone {
     Drone(const int id, const Ponto2D posicao_atual, const double raio_comunicacao);
 
     void mover(const double velocidade, const double orientacao_velocidade, const double tempo);
-    double calcular_distancia(const Drone& drone) const;
-    bool esta_no_alcance(const Drone& drone) const;
+    double calcular_distancia(const Drone* drone) const;
+    bool esta_no_alcance(const Drone* drone) const;
 
     void broadcast_mensagem(Drone** drones, const unsigned int qtd_drones);
     void salvar_mensagem(const std::string mensagem);

@@ -52,15 +52,15 @@ void Drone::mover(const double velocidade, const double orientacao_velocidade, c
     return;
 }
 
-double Drone::calcular_distancia(const Drone& drone) const {
-    return this->get_posicao_atual().calcular_distancia(drone.get_posicao_atual());
+double Drone::calcular_distancia(const Drone* drone) const {
+    return this->get_posicao_atual().calcular_distancia(drone->get_posicao_atual());
 }
 
 void Drone::broadcast_mensagem(Drone** drones, const unsigned int qtd_drones) {
     std::string mensagem = criar_mensagem(*this);
 
     for(unsigned int i = 0; i < qtd_drones; i++) {
-        if(esta_no_alcance(*drones[i])) {
+        if(esta_no_alcance(drones[i])) {
             drones[i]->salvar_mensagem(mensagem);
         }
     }
@@ -78,7 +78,7 @@ std::string criar_mensagem(const Drone& drone) {
     return mensagem.str();
 }
 
-bool Drone::esta_no_alcance(const Drone& drone) const {
+bool Drone::esta_no_alcance(const Drone* drone) const {
     double distancia = calcular_distancia(drone);
     return distancia <= raio_comunicacao;
 }
