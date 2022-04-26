@@ -5,6 +5,46 @@
 
 #include "../Cliente/Cliente.hpp"
 
+struct Celula {
+    Celula* proxima;
+    Celula* anterior;
+    Cliente valor;
+
+    Celula();
+    Celula(Cliente valor);
+    Celula(Celula* proxima, Celula* anterior);
+    Celula(Celula* proxima, Celula* anterior, Cliente valor);
+
+    void set_proxima(Celula* proxima);
+    Celula* get_proxima() const;
+    void set_anterior(Celula* anterior);
+    Celula* get_anterior() const;
+    void set_valor(Cliente valor);
+    Cliente get_valor() const;
+};
+
+struct ListaDuplamenteEncadeada {
+    Celula* inicio;
+    Celula* fim;
+
+    unsigned int tamanho;
+
+    ListaDuplamenteEncadeada();
+    
+    void adicionar_ao_fim(const Cliente valor);
+    void adicionar_ao_comeco(const Cliente valor);
+    void adicionar_antes(const Cliente valor, const Cliente referencia);
+    void adicionar_depois(const Cliente valor, const Cliente referencia);
+
+    void remover(const Cliente valor);
+    void limpar();
+
+    Cliente get_elemento_em(const unsigned int posicao) const;
+    bool esta_vazia() const;
+
+    unsigned int get_tamanho() const;
+};
+
 struct FilaAtendimento {
     int ultima_senha_gerada;
 
@@ -12,7 +52,7 @@ struct FilaAtendimento {
 
     void adicionar_cliente(const std::string nome, const unsigned int idade);
     Cliente* chamar_cliente();
-    void estimativa_tempo_espera(const int senha);
+    void estimativa_tempo_espera(const int senha) const;
     void imprimir_fila() const;
 
     bool esta_vazia() const;
