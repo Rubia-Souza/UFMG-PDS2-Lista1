@@ -60,7 +60,7 @@ void Drone::broadcast_mensagem(Drone** drones, const unsigned int qtd_drones) {
     std::string mensagem = criar_mensagem(*this);
 
     for(unsigned int i = 0; i < qtd_drones; i++) {
-        if(esta_no_alcance(drones[i])) {
+        if(esta_no_alcance(drones[i]) && drones[i]->get_id() != get_id()) {
             drones[i]->salvar_mensagem(mensagem);
         }
     }
