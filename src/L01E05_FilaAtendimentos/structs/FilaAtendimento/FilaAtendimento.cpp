@@ -98,10 +98,10 @@ void ListaDuplamenteEncadeada::adicionar_ao_comeco(const Cliente valor) {
     return;
 }
 
-void ListaDuplamenteEncadeada::adicionar_antes(const Cliente valor, const Cliente referencia) {
+void ListaDuplamenteEncadeada::adicionar_antes(const Cliente valor, const int senhaReferencia) {
     Celula* posterior = nullptr;
     for(posterior = inicio->get_proxima(); posterior != fim; posterior = posterior->get_proxima()) {
-        if(posterior->get_valor().get_senha() == referencia.get_senha()) {
+        if(posterior->get_valor().get_senha() == senhaReferencia) {
             break;
         }
     }
@@ -119,10 +119,10 @@ void ListaDuplamenteEncadeada::adicionar_antes(const Cliente valor, const Client
     return;
 }
 
-void ListaDuplamenteEncadeada::adicionar_depois(const Cliente valor, const Cliente referencia) {
+void ListaDuplamenteEncadeada::adicionar_depois(const Cliente valor, const int senhaReferencia) {
     Celula* anterior = nullptr;
     for(anterior = inicio->get_proxima(); anterior != fim; anterior = anterior->get_proxima()) {
-        if(anterior->get_valor().get_senha() == referencia.get_senha()) {
+        if(anterior->get_valor().get_senha() == senhaReferencia) {
             break;
         }
     }

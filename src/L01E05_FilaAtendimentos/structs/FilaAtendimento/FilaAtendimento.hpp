@@ -33,8 +33,8 @@ struct ListaDuplamenteEncadeada {
     
     void adicionar_ao_fim(const Cliente valor);
     void adicionar_ao_comeco(const Cliente valor);
-    void adicionar_antes(const Cliente valor, const Cliente referencia);
-    void adicionar_depois(const Cliente valor, const Cliente referencia);
+    void adicionar_antes(const Cliente valor, const int senhaReferencia);
+    void adicionar_depois(const Cliente valor, const int senhaReferencia);
 
     void remover(const Cliente valor);
     void limpar();
