@@ -130,6 +130,9 @@ void ListaDuplamenteEncadeada::adicionar_depois(const Cliente valor, const int s
     Celula* posterior = anterior->get_proxima();
     Celula* novaCelula = new Celula(valor);
 
+    anterior->set_proxima(novaCelula);
+    posterior->set_anterior(novaCelula);
+
     novaCelula->set_anterior(anterior);
     novaCelula->set_proxima(posterior);
 
@@ -145,7 +148,7 @@ void ListaDuplamenteEncadeada::remover(const Cliente valor) {
         }
     }
 
-    if(alvo == nullptr) {
+    if(alvo == fim) {
         return;
     }
 
@@ -176,7 +179,7 @@ void ListaDuplamenteEncadeada::limpar() {
 
 Cliente ListaDuplamenteEncadeada::get_elemento_em(const unsigned int posicao) const {
     if(posicao >= get_tamanho()) {
-        throw std::exception("[ERRO] Acesso a index invalido");
+        return *(new Cliente());
     }
 
     Celula* alvo = inicio->get_proxima();
@@ -191,7 +194,7 @@ unsigned int ListaDuplamenteEncadeada::get_tamanho() const {
     return tamanho;
 }
 
-void FilaAtendimento::adicionar_cliente(const std::string nome, const unsigned int idade) {
+/*void FilaAtendimento::adicionar_cliente(const std::string nome, const unsigned int idade) {
 
 }
 
@@ -209,4 +212,4 @@ void FilaAtendimento::imprimir_fila() const {
 
 bool FilaAtendimento::esta_vazia() const {
 
-}
+}*/
