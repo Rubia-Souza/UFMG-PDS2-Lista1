@@ -175,6 +175,7 @@ Cliente* ListaDuplamenteEncadeada::pop_first() {
     inicio->set_proxima(novoValorInicial);
     novoValorInicial->set_anterior(inicio);
 
+    tamanho--;
     return &(celulaRemovida->valor);
 }
 
@@ -189,6 +190,7 @@ Cliente* ListaDuplamenteEncadeada::pop_last() {
     fim->set_anterior(novoValorFinal);
     novoValorFinal->set_proxima(fim);
 
+    tamanho--;
     return &(celulaRemovida->valor);
 }
 
@@ -274,7 +276,7 @@ void FilaAtendimento::estimativa_tempo_espera(const int senha) const {
             tempoEspera += clienteAtual.tempo_estimado_atendimento();
         }
         else {
-            break;;
+            break;
         }
     }
 
