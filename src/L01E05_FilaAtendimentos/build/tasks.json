@@ -12,6 +12,7 @@
                 "${fileDirname}\\structs\\Cliente\\*.cpp",
                 "${fileDirname}\\structs\\FilaAtendimento\\*.hpp",
                 "${fileDirname}\\structs\\FilaAtendimento\\*.cpp",
+                "${fileDirname}\\*.hpp",
                 "${file}",
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe"
