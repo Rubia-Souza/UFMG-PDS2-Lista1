@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-#include "./structs/Cliente/Cliente.hpp"
+#include "./Cliente.hpp"
 #include "./structs/FilaAtendimento/FilaAtendimento.hpp"
 
 using namespace std;
