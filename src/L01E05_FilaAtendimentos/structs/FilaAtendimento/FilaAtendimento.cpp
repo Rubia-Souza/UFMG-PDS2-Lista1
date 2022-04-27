@@ -4,6 +4,8 @@
 #include "./FilaAtendimento.hpp"
 #include "../Cliente/Cliente.hpp"
 
+#define VALOR_SENHA_INICIAL 0
+
 Celula::Celula() {
     set_proxima(nullptr);
     set_anterior(nullptr);
@@ -162,6 +164,34 @@ void ListaDuplamenteEncadeada::remover(const Cliente valor) {
     return;
 }
 
+Cliente* ListaDuplamenteEncadeada::pop_first() {
+    if(esta_vazia()) {
+        return nullptr;
+    }
+
+    Celula* celulaRemovida = inicio->get_proxima();
+    Celula* novoValorInicial = celulaRemovida->get_proxima();
+
+    inicio->set_proxima(novoValorInicial);
+    novoValorInicial->set_anterior(inicio);
+
+    return &(celulaRemovida->valor);
+}
+
+Cliente* ListaDuplamenteEncadeada::pop_last() {
+    if(esta_vazia()) {
+        return nullptr;
+    }
+
+    Celula* celulaRemovida = fim->get_anterior();
+    Celula* novoValorFinal = celulaRemovida->get_anterior();
+
+    fim->set_anterior(novoValorFinal);
+    novoValorFinal->set_proxima(fim);
+
+    return &(celulaRemovida->valor);
+}
+
 void ListaDuplamenteEncadeada::limpar() {
     Celula* proximaReferencia = nullptr;
     
@@ -194,22 +224,76 @@ unsigned int ListaDuplamenteEncadeada::get_tamanho() const {
     return tamanho;
 }
 
-/*void FilaAtendimento::adicionar_cliente(const std::string nome, const unsigned int idade) {
+FilaAtendimento::FilaAtendimento() {
+    ultima_senha_gerada = VALOR_SENHA_INICIAL;
+    index_ultimo_prioritario = -1;
+    clientes = new ListaDuplamenteEncadeada();
+}
 
+void FilaAtendimento::adicionar_cliente(const std::string nome, const unsigned int idade) {
+    Cliente* cliente = new Cliente(nome, idade, this->get_nova_senha());
+
+    if(!cliente->eh_prioritario()) {
+        clientes->adicionar_ao_fim(*cliente);
+        return;
+    }
+    
+    if(index_ultimo_prioritario == -1) {
+        clientes->adicionar_ao_comeco(*cliente);
+    }
+    else {
+        Cliente ultimo_prioritario = clientes->get_elemento_em(index_ultimo_prioritario);
+        clientes->adicionar_depois(*cliente, ultimo_prioritario.get_senha());
+    }
+    index_ultimo_prioritario++;
+
+    return;
 }
 
 Cliente* FilaAtendimento::chamar_cliente() {
+    if(clientes->esta_vazia()) {
+        std::cout << "Fila vazia!\n";
+        return nullptr;
+    }
 
+    Cliente* primeiroFila = clientes->pop_first();
+    if(primeiroFila->eh_prioritario()) {
+        index_ultimo_prioritario--;
+    }
+
+    return primeiroFila;
 }
 
 void FilaAtendimento::estimativa_tempo_espera(const int senha) const {
+    unsigned int tempoEspera = 0;
+    Cliente clienteAtual;
 
+    for(unsigned int i = 0; i < clientes->get_tamanho(); i++) {
+        clienteAtual = clientes->get_elemento_em(i);
+        if(clienteAtual.get_senha() != senha) {
+            tempoEspera += clienteAtual.tempo_estimado_atendimento();
+        }
+        else {
+            break;;
+        }
+    }
+
+    std::cout << "Tempo estimado para atender " << clienteAtual.get_nome() << " eh " << tempoEspera << " minutos.\n";
+    return;
 }
 
 void FilaAtendimento::imprimir_fila() const {
-
+    for(unsigned int i = 0; i < clientes->get_tamanho(); i++) {
+        Cliente clienteAtual = clientes->get_elemento_em(i);
+        clienteAtual.imprimir_dados(); 
+    }
 }
 
 bool FilaAtendimento::esta_vazia() const {
+    return clientes->esta_vazia();
+}
 
-}*/
+int FilaAtendimento::get_nova_senha() {
+    this->ultima_senha_gerada += 1;
+    return ultima_senha_gerada;
+}

@@ -37,6 +37,8 @@ struct ListaDuplamenteEncadeada {
     void adicionar_depois(const Cliente valor, const int senhaReferencia);
 
     void remover(const Cliente valor);
+    Cliente* pop_first();
+    Cliente* pop_last();
     void limpar();
 
     Cliente get_elemento_em(const unsigned int posicao) const;
@@ -47,6 +49,8 @@ struct ListaDuplamenteEncadeada {
 
 struct FilaAtendimento {
     int ultima_senha_gerada;
+    int index_ultimo_prioritario;
+    ListaDuplamenteEncadeada* clientes;
 
     FilaAtendimento();
 
@@ -56,6 +60,8 @@ struct FilaAtendimento {
     void imprimir_fila() const;
 
     bool esta_vazia() const;
+
+    int get_nova_senha();
 };
 
 #endif
