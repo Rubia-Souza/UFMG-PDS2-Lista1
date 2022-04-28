@@ -21,6 +21,10 @@ Jogador::Jogador(const std::string nome, const std::string posicao, const unsign
     set_salario(salario);
 }
 
+bool Jogador::operator <(const Jogador & outro_jogador) {
+    return outro_jogador.get_salario() < get_salario();
+}
+
 void Jogador::imprimir_dados() const {
     std::cout << get_nome() << "\t" << get_posicao() << "\t" << get_salario() << "\n";
     return;

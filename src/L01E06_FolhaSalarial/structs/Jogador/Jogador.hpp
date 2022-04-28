@@ -12,6 +12,8 @@ struct Jogador {
     Jogador(const std::string nome);
     Jogador(const std::string nome, const std::string posicao, const unsigned int salario);
 
+    bool operator <(const Jogador & outro_jogador);
+
     void imprimir_dados() const;
 
     void set_nome(const std::string nome);
