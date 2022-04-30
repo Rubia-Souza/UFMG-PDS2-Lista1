@@ -1,4 +1,4 @@
-#include <list>
+#include <map>
 #include <string>
 
 #include "./RegistroNBA.hpp"
@@ -17,10 +17,24 @@ void RegistroNBA::adicionar_time(const std::string nome) {
 }
 
 void RegistroNBA::adicionar_jogador(const std::string nome_time, const std::string nome_jogador, const std::string posicao, const unsigned int salario) {
+    if(!contem_time(nome_time)) {
+        adicionar_time(nome_time);
+    }
+
     Time* time_jogador = get_time(nome_time);
     time_jogador->adicionar_jogador(nome_jogador, posicao, salario);
 
     return;
+}
+
+bool RegistroNBA::contem_time(const std::string nome) const {
+    for(Time time : get_times()) {
+        if(time.get_nome() == nome) {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 void RegistroNBA::imprimir_lista_jogadores_time(const std::string nome_time) const {
@@ -37,7 +51,7 @@ void RegistroNBA::imprimir_folha_consolidada_time(const std::string nome_time) c
     return;
 }
 
-void RegistroNBA::imprimir_folha_salarial_geral() const {
+void RegistroNBA::imprimir_folha_salarial_geral() {
     times.sort([](const Time& time1, const Time& time2) {
         return time1.get_nome() < time2.get_nome();
     });
@@ -52,7 +66,8 @@ void RegistroNBA::imprimir_folha_salarial_geral() const {
 Time* RegistroNBA::get_time(const std::string& nome) const {
     for(Time time : get_times()) {
         if(time.get_nome() == nome) {
-            return &time;
+            Time* alvo = &time;
+            return alvo;
         }
     }
 
