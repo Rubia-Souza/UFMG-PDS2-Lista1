@@ -43,7 +43,7 @@ Jogador Time::get_jogador(const std::string& nome) const {
     return *(new Jogador());
 }
 
-void Time::imprimir_lista_jogadores() const {
+void Time::imprimir_lista_jogadores() {
     std::cout << get_nome() << "\n";
     jogadores.sort([](const Jogador& jogador1, const Jogador& jogador2) {
         return jogador2.get_salario() < jogador1.get_salario();
