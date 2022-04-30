@@ -18,6 +18,7 @@ struct RegistroNBA {
     void imprimir_folha_consolidada_time(const std::string nome_time) const;
     void imprimir_folha_salarial_geral() const;
 
+    Time* get_time(const std::string& nome) const;
     std::list<Time> get_times() const;
 };
 
