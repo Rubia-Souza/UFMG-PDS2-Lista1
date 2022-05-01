@@ -1,27 +1,22 @@
 #ifndef REGISTRO_NBA_H
 #define REGISTRO_NBA_H
 
-#include <list>
+#include <map>
 #include <string>
 
 #include "../Time/Time.hpp"
 
 struct RegistroNBA {
-    std::list<Time> times;
+    std::map<std::string, Time, std::less<std::string>> times;
 
     RegistroNBA();
 
     void adicionar_time(const std::string nome);
     void adicionar_jogador(const std::string nome_time, const std::string nome_jogador, const std::string posicao, const unsigned int salario);
 
-    bool contem_time(const std::string nome) const;
-
-    void imprimir_lista_jogadores_time(const std::string nome_time) const;
-    void imprimir_folha_consolidada_time(const std::string nome_time) const;
-    void imprimir_folha_salarial_geral();
-
-    Time* get_time(const std::string& nome) const;
-    std::list<Time> get_times() const;
+    void imprimir_lista_jogadores_time(const std::string nome_time);
+    void imprimir_folha_consolidada_time(const std::string nome_time);
+    void imprimir_folha_salarial_geral() const;
 };
 
 #endif
