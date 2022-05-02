@@ -50,7 +50,7 @@ void Imagem::fill(const unsigned int linha, const unsigned int coluna, const std
 void Imagem::to_grayscale() {
     for(unsigned int i = 0; i < pixels.size(); i++) {
         for(unsigned int j = 0; j < pixels[i].size(); j++) {
-            unsigned short int tom_medio = pixels[i][j].get_tom_medio();
+            int tom_medio = pixels[i][j].get_tom_medio();
             pixels[i][j].set_rgb(tom_medio, tom_medio, tom_medio);
         }
     }

@@ -4,14 +4,14 @@
 
 #include "./Pixel.hpp"
 
-std::vector<unsigned short int> get_cor_de_string(const std::string& cor);
-std::vector<std::string> formatar_cores(const unsigned short int red, const unsigned short int green, const unsigned short int blue);
+std::vector<int> get_cor_de_string(const std::string& cor);
+std::vector<std::string> formatar_cores(const int red, const int green, const int blue);
 
 Pixel::Pixel() {
     set_rgb(0, 0, 0);
 }
 
-Pixel::Pixel(const unsigned short int red, const unsigned short int green, const unsigned short int blue) {
+Pixel::Pixel(const int red, const int green, const int blue) {
     set_rgb(red, blue, green);
 }
 
@@ -23,7 +23,7 @@ void Pixel::print() const {
     return;
 }
 
-std::vector<std::string> formatar_cores(const unsigned short int red, const unsigned short int green, const unsigned short int blue) {
+std::vector<std::string> formatar_cores(const int red, const int green, const int blue) {
     std::vector<std::string> cores;
     cores.push_back(std::to_string(red));
     cores.push_back(std::to_string(green));
@@ -44,14 +44,14 @@ std::vector<std::string> formatar_cores(const unsigned short int red, const unsi
 }
 
 void Pixel::set_rgb(const std::string& cor) {
-    std::vector<unsigned short int> valores = get_cor_de_string(cor);
+    std::vector<int> valores = get_cor_de_string(cor);
     set_rgb(valores[0], valores[1], valores[2]);
 
     return;
 }
 
-std::vector<unsigned short int> get_cor_de_string(const std::string& cor) {
-    std::vector<unsigned short int> cor_rgb_separada(3);
+std::vector<int> get_cor_de_string(const std::string& cor) {
+    std::vector<int> cor_rgb_separada(3);
     std::string cor_atual = "";
     
     unsigned int i = 0;
@@ -68,7 +68,7 @@ std::vector<unsigned short int> get_cor_de_string(const std::string& cor) {
     return cor_rgb_separada;
 }
 
-void Pixel::set_rgb(const unsigned short int red, const unsigned short int green, const unsigned short int blue) {
+void Pixel::set_rgb(const int red, const int green, const int blue) {
     set_red(red);
     set_blue(blue);
     set_green(green);
@@ -76,8 +76,8 @@ void Pixel::set_rgb(const unsigned short int red, const unsigned short int green
     return;
 }
 
-std::vector<unsigned short int> Pixel::get_rgb() const {
-    std::vector<unsigned short int> cores;
+std::vector<int> Pixel::get_rgb() const {
+    std::vector<int> cores;
 
     cores.push_back(get_red());
     cores.push_back(get_green());
@@ -86,33 +86,33 @@ std::vector<unsigned short int> Pixel::get_rgb() const {
     return cores;
 }
 
-unsigned short int Pixel::get_tom_medio() const {
+int Pixel::get_tom_medio() const {
     return (red + blue + green) / 3;
 }
 
-void Pixel::set_red(const unsigned short int red) {
+void Pixel::set_red(const int red) {
     this->red = red;
     return;
 }
 
-unsigned short int Pixel::get_red() const {
+int Pixel::get_red() const {
     return red;
 }
 
-void Pixel::set_green(const unsigned short int green) {
+void Pixel::set_green(const int green) {
     this->green = green;
     return;
 }
 
-unsigned short int Pixel::get_green() const {
+int Pixel::get_green() const {
     return green;
 }
 
-void Pixel::set_blue(const unsigned short int blue) {
+void Pixel::set_blue(const int blue) {
     this->blue = blue;
     return;
 }
 
-unsigned short int Pixel::get_blue() const {
+int Pixel::get_blue() const {
     return blue;
 }
