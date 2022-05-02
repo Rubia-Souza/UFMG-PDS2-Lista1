@@ -5,6 +5,11 @@
 #include "./Imagem.hpp"
 #include "../Pixel/Pixel.hpp"
 
+#define BRANCO 255
+#define PRETO 0
+
+std::vector<unsigned short int> get_cor_de_string(const std::string& cor);
+
 Imagem::Imagem() {
     set_width(0);
     set_height(0);
@@ -40,8 +45,9 @@ void Imagem::clear() {
 
 void Imagem::fill(const unsigned int linha, const unsigned int coluna, const std::string& pixel) {
     std::vector<unsigned short int> cor = get_cor_de_string(pixel);
-    
     pixels[linha][coluna].set_rgb(cor[0], cor[1], cor[2]);
+
+    return;
 }
 
 std::vector<unsigned short int> get_cor_de_string(const std::string& cor) {
@@ -65,9 +71,8 @@ std::vector<unsigned short int> get_cor_de_string(const std::string& cor) {
 void Imagem::to_grayscale() {
     for(unsigned int i = 0; i < pixels.size(); i++) {
         for(unsigned int j = 0; j < pixels[i].size(); j++) {
-            Pixel* pixel = &pixels[i][j];
-            unsigned short int tom_medio = pixel->get_tom_medio();
-            pixel->set_rgb(tom_medio, tom_medio, tom_medio);
+            unsigned short int tom_medio = pixels[i][j].get_tom_medio();
+            pixels[i][j].set_rgb(tom_medio, tom_medio, tom_medio);
         }
     }
     
@@ -75,7 +80,18 @@ void Imagem::to_grayscale() {
 }
 
 void Imagem::grayscale_thresholding(const unsigned int limiar) {
-    
+    for(unsigned int i = 0; i < pixels.size(); i++) {
+        for(unsigned int j = 0; j < pixels[i].size(); j++) {
+            if(pixels[i][j].get_tom_medio() > limiar) {
+                pixels[i][j].set_rgb(BRANCO, BRANCO, BRANCO);
+            }
+            else {
+                pixels[i][j].set_rgb(PRETO, PRETO, PRETO);
+            }
+        }
+    }
+
+    return;
 }
 
 void Imagem::show() const {
@@ -109,4 +125,8 @@ void Imagem::set_height(const unsigned int height) {
 
 unsigned int Imagem::get_height() const {
     return height;
+}
+
+std::vector<std::vector<Pixel>> Imagem::get_pixels() const {
+    return pixels;
 }

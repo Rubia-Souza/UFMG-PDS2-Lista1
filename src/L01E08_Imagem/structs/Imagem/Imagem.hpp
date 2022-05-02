@@ -30,7 +30,7 @@ class Imagem {
         void set_height(const unsigned int height);
         unsigned int get_height() const;
         
-        std::vector<std::vector<Pixel>> get_pixels();
+        std::vector<std::vector<Pixel>> get_pixels() const;
 };
 
 #endif
