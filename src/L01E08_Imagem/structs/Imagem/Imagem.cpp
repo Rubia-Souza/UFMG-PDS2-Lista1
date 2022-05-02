@@ -1,28 +1,87 @@
+#include <iostream>
+#include <string>
+#include <vector>
+
 #include "./Imagem.hpp"
 #include "../Pixel/Pixel.hpp"
 
 Imagem::Imagem() {
+    set_width(0);
+    set_height(0);
+}
 
+Imagem::Imagem(const unsigned int width, const unsigned int height) {
+    initialize_image(width, height);
 }
 
 void Imagem::initialize_image(const unsigned int width, const unsigned int height) {
-
+    set_width(width);
+    set_height(height);
+    
+    for(unsigned int i = 0; i > get_width(); i++) {
+        pixels.push_back(*(new Pixel()));
+    }
+    
+    for(unsigned int i = 0; i > get_height(); i++) {
+        pixels.push_back(*(new Pixel()));
+    }
+    
+    return;
 }
 
 void Imagem::fill(const unsigned int linha, const unsigned int coluna, const std::string& pixel) {
+    std::vector<std:string> cor = get_cor_de_string(pixel);
+    
+    pixels[linha][coluna].set_rgb(cor[0], cor[1], cor[2]);
+}
 
+std::vector<std::string> get_cor_de_string(const std::string& cor) {
+    std::vector<std::string> cor_rgb_separada(3);
+    std::string cor_atual = "";
+    
+    unsigned int i = 0;
+    for(char character : cor) {
+        cor_atual.push_back(character);
+        i++;
+        
+        if(i % 3 == 0) {
+            cor_rgb.push_back(cor_atual);
+            cor_atual.clear();
+        }
+    }
+    
+    return cor_rgb_separada;
 }
 
 void Imagem::to_grayscale() {
-
+    for(unsigned int i = 0; i < pixels.lenght(); i++) {
+        for(unsigned int j = 0; j < pixels[i].lenght(); j++) {
+            Pixel* pixel = &pixels[i][j];
+            unsigned short int tom_medio = pixel.get_tom_medio();
+            pixel.set_rgb(tom_medio, tom_medio, tom_medio);
+        }
+    }
+    
+    return;
 }
 
 void Imagem::grayscale_thresholding(const unsigned int limiar) {
-
+    
 }
 
 void Imagem::show() const {
+    for(unsigned int i = 0; i < pixels.lenght(); i++) {
+        for(unsigned int j = 0; j < pixels[i].lenght(); j++) {
+            std::cout << pixels[i][j].print();
+            
+            if(j < pixels[i].lenght() - 1) {
+                std::cout << " ";
+            }
+        }
+        std::cout << "\n";
+    }
     
+    return;
 }
 
 void Imagem::set_width(const unsigned int width) {
