@@ -10,6 +10,7 @@ class Pixel {
         unsigned short int blue;
     
     public:
+        Pixel();
         Pixel(const unsigned short int red, const unsigned short int green, const unsigned short int blue);
 
         void print() const;

@@ -14,12 +14,15 @@ class Imagem {
 
     public:
         Imagem();
+        Imagem(const unsigned int width, const unsigned int height);
 
         void initialize_image(const unsigned int width, const unsigned int height);
         void fill(const unsigned int linha, const unsigned int coluna, const std::string& pixel);
         void to_grayscale();
         void grayscale_thresholding(const unsigned int limiar);
         void show() const;
+
+        void clear();
 
         void set_width(const unsigned int width);
         unsigned int get_width() const;

@@ -15,28 +15,37 @@ Imagem::Imagem(const unsigned int width, const unsigned int height) {
 }
 
 void Imagem::initialize_image(const unsigned int width, const unsigned int height) {
+    clear();
+
     set_width(width);
     set_height(height);
-    
-    for(unsigned int i = 0; i > get_width(); i++) {
-        pixels.push_back(*(new Pixel()));
-    }
-    
-    for(unsigned int i = 0; i > get_height(); i++) {
-        pixels.push_back(*(new Pixel()));
+
+    for(unsigned int i = 0; i < get_height(); i++) {
+        for(unsigned int j = 0; j < get_width(); j++) {
+            pixels[i].push_back(*(new Pixel()));
+        }
     }
     
     return;
 }
 
+void Imagem::clear() {
+    for(unsigned int i = 0; i < pixels.size(); i++) {
+        pixels[i].clear();
+    }
+    pixels.clear();
+
+    return;
+}
+
 void Imagem::fill(const unsigned int linha, const unsigned int coluna, const std::string& pixel) {
-    std::vector<std:string> cor = get_cor_de_string(pixel);
+    std::vector<unsigned short int> cor = get_cor_de_string(pixel);
     
     pixels[linha][coluna].set_rgb(cor[0], cor[1], cor[2]);
 }
 
-std::vector<std::string> get_cor_de_string(const std::string& cor) {
-    std::vector<std::string> cor_rgb_separada(3);
+std::vector<unsigned short int> get_cor_de_string(const std::string& cor) {
+    std::vector<unsigned short int> cor_rgb_separada(3);
     std::string cor_atual = "";
     
     unsigned int i = 0;
@@ -45,7 +54,7 @@ std::vector<std::string> get_cor_de_string(const std::string& cor) {
         i++;
         
         if(i % 3 == 0) {
-            cor_rgb.push_back(cor_atual);
+            cor_rgb_separada.push_back(std::stoul(cor_atual));
             cor_atual.clear();
         }
     }
@@ -54,11 +63,11 @@ std::vector<std::string> get_cor_de_string(const std::string& cor) {
 }
 
 void Imagem::to_grayscale() {
-    for(unsigned int i = 0; i < pixels.lenght(); i++) {
-        for(unsigned int j = 0; j < pixels[i].lenght(); j++) {
+    for(unsigned int i = 0; i < pixels.size(); i++) {
+        for(unsigned int j = 0; j < pixels[i].size(); j++) {
             Pixel* pixel = &pixels[i][j];
-            unsigned short int tom_medio = pixel.get_tom_medio();
-            pixel.set_rgb(tom_medio, tom_medio, tom_medio);
+            unsigned short int tom_medio = pixel->get_tom_medio();
+            pixel->set_rgb(tom_medio, tom_medio, tom_medio);
         }
     }
     
@@ -70,11 +79,11 @@ void Imagem::grayscale_thresholding(const unsigned int limiar) {
 }
 
 void Imagem::show() const {
-    for(unsigned int i = 0; i < pixels.lenght(); i++) {
-        for(unsigned int j = 0; j < pixels[i].lenght(); j++) {
-            std::cout << pixels[i][j].print();
+    for(unsigned int i = 0; i < pixels.size(); i++) {
+        for(unsigned int j = 0; j < pixels[i].size(); j++) {
+            pixels[i][j].print();
             
-            if(j < pixels[i].lenght() - 1) {
+            if(j < pixels[i].size() - 1) {
                 std::cout << " ";
             }
         }
