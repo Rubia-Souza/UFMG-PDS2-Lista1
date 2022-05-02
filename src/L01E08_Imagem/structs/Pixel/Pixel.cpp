@@ -2,6 +2,10 @@
 
 #include "./Pixel.hpp"
 
+Pixel::Pixel() {
+    set_rgb(0, 0, 0);
+}
+
 Pixel::Pixel(const unsigned short int red, const unsigned short int green, const unsigned short int blue) {
     set_rgb(red, blue, green);
 }
