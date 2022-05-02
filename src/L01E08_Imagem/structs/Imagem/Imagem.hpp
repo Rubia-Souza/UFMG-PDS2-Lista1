@@ -2,12 +2,15 @@
 #define IMAGEM_H
 
 #include <string>
+#include <vector>
+
+#include "../Pixel/Pixel.hpp"
 
 class Imagem {
     private:
         unsigned int width;
         unsigned int height;
-        // TODO: Adiciona matriz de Pixels
+        std::vector<std::vector<Pixel>> pixels;
 
     public:
         Imagem();
