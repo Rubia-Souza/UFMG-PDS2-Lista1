@@ -30,6 +30,10 @@ std::vector<unsigned short int> Pixel::get_rgb() const {
     return cores;
 }
 
+unsigned short int Pixel::get_tom_medio() const {
+    return (red + blue + green) / 3;
+}
+
 void Pixel::set_red(const unsigned short int red) {
     this->red = red;
     return;
