@@ -4,6 +4,7 @@
 
 #include "./Pixel.hpp"
 
+std::vector<unsigned short int> get_cor_de_string(const std::string& cor);
 std::vector<std::string> formatar_cores(const unsigned short int red, const unsigned short int green, const unsigned short int blue);
 
 Pixel::Pixel() {
