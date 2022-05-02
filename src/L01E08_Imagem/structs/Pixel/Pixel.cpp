@@ -16,7 +16,7 @@ Pixel::Pixel(const int red, const int green, const int blue) {
 }
 
 void Pixel::print() const {
-    std::vector<std::string> cores = formatar_cores(get_red(), get_blue(), get_green());
+    std::vector<std::string> cores = formatar_cores(get_red(), get_green(), get_blue());
 
     std::cout << cores[0] << cores[1] << cores[2];
 
@@ -51,7 +51,7 @@ void Pixel::set_rgb(const std::string& cor) {
 }
 
 std::vector<int> get_cor_de_string(const std::string& cor) {
-    std::vector<int> cor_rgb_separada(3);
+    std::vector<int> cor_rgb_separada;
     std::string cor_atual = "";
     
     unsigned int i = 0;

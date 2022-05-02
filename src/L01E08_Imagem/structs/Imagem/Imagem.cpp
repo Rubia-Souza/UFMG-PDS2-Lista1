@@ -24,6 +24,8 @@ void Imagem::initialize_image(const unsigned int width, const unsigned int heigh
     set_height(height);
 
     for(unsigned int i = 0; i < get_height(); i++) {
+        pixels.push_back(*(new std::vector<Pixel>{}));
+        
         for(unsigned int j = 0; j < get_width(); j++) {
             pixels[i].push_back(*(new Pixel()));
         }
