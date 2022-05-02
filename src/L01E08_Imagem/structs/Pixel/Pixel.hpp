@@ -25,6 +25,8 @@ class Pixel {
 
         void set_blue(const unsigned short int blue);
         unsigned short int get_blue() const;
+    
+        unsigned short int get_tom_medio() const;
 };
 
 #endif
