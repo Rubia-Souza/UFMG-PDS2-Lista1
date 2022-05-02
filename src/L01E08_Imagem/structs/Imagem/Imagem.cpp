@@ -8,8 +8,6 @@
 #define BRANCO 255
 #define PRETO 0
 
-std::vector<unsigned short int> get_cor_de_string(const std::string& cor);
-
 Imagem::Imagem() {
     set_width(0);
     set_height(0);
@@ -44,28 +42,9 @@ void Imagem::clear() {
 }
 
 void Imagem::fill(const unsigned int linha, const unsigned int coluna, const std::string& pixel) {
-    std::vector<unsigned short int> cor = get_cor_de_string(pixel);
-    pixels[linha][coluna].set_rgb(cor[0], cor[1], cor[2]);
+    pixels[linha][coluna].set_rgb(pixel);
 
     return;
-}
-
-std::vector<unsigned short int> get_cor_de_string(const std::string& cor) {
-    std::vector<unsigned short int> cor_rgb_separada(3);
-    std::string cor_atual = "";
-    
-    unsigned int i = 0;
-    for(char character : cor) {
-        cor_atual.push_back(character);
-        i++;
-        
-        if(i % 3 == 0) {
-            cor_rgb_separada.push_back(std::stoul(cor_atual));
-            cor_atual.clear();
-        }
-    }
-    
-    return cor_rgb_separada;
 }
 
 void Imagem::to_grayscale() {

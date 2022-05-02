@@ -42,6 +42,31 @@ std::vector<std::string> formatar_cores(const unsigned short int red, const unsi
     return cores;
 }
 
+void Pixel::set_rgb(const std::string& cor) {
+    std::vector<unsigned short int> valores = get_cor_de_string(cor);
+    set_rgb(valores[0], valores[1], valores[2]);
+
+    return;
+}
+
+std::vector<unsigned short int> get_cor_de_string(const std::string& cor) {
+    std::vector<unsigned short int> cor_rgb_separada(3);
+    std::string cor_atual = "";
+    
+    unsigned int i = 0;
+    for(char character : cor) {
+        cor_atual.push_back(character);
+        i++;
+        
+        if(i % 3 == 0) {
+            cor_rgb_separada.push_back(std::stoul(cor_atual));
+            cor_atual.clear();
+        }
+    }
+    
+    return cor_rgb_separada;
+}
+
 void Pixel::set_rgb(const unsigned short int red, const unsigned short int green, const unsigned short int blue) {
     set_red(red);
     set_blue(blue);
